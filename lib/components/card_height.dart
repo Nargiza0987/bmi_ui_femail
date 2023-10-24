@@ -1,65 +1,46 @@
 import 'package:bmi_ui_male_female/utils/app_colors.dart';
 import 'package:bmi_ui_male_female/utils/app_text.dart';
+import 'package:bmi_ui_male_female/utils/app_text_style.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-class CardHeight extends StatefulWidget {
-  const CardHeight({
-    super.key,
-  });
+class CardHeight extends StatelessWidget {
+  const CardHeight({Key? key, required this.onChanged, required this.height})
+      : super(key: key);
 
-  @override
-  State<CardHeight> createState() => _CardHeightState();
-}
-
-class _CardHeightState extends State<CardHeight> {
-  double currentSliderValue = 160;
-  void _incrementCounter() {
-    setState(() {});
-  }
+  final int height;
+  final void Function(double) onChanged;
 
   @override
   Widget build(BuildContext context) {
-    return Card(
-      color: AppColor.brColor,
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.end,
-        children: [
-          Text(
-            AppText.height,
-            style: TextStyle(fontSize: 25, color: AppColor.whColor),
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.end,
+      children: [
+        const Text(AppText.height, style: AppTextStyle.weightTextStyle),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.end,
+          children: [
+            Text('$height', style: AppTextStyle.rostTextStyle),
+            Text(AppText.cm, style: AppTextStyle.cmTextStyle),
+          ],
+        ),
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 20),
+          child: SizedBox(
+            width: double.infinity,
+            child: CupertinoSlider(
+              activeColor: AppColor.whColor,
+              thumbColor: AppColor.redColor,
+              value: height.toDouble(),
+              min: 40,
+              max: 240,
+              divisions: 200,
+              onChanged: onChanged,
+            ),
           ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.end,
-            children: [
-              Text(
-                '$currentSliderValue',
-                style: TextStyle(fontSize: 36, color: AppColor.whColor),
-              ),
-              Text(
-                AppText.cm,
-                style: TextStyle(
-                    fontSize: 18, color: AppColor.whColor, height: 2.4),
-              ),
-            ],
-          ),
-          Slider(
-            activeColor: AppColor.whColor,
-            inactiveColor: AppColor.grColor,
-            thumbColor: AppColor.redColor,
-            value: currentSliderValue,
-            min: 40,
-            max: 240,
-            divisions: 200,
-            label: currentSliderValue.round().toString(),
-            onChanged: (double value) {
-              setState(() {
-                currentSliderValue = value;
-              });
-            },
-          ),
-        ],
-      ),
+        ),
+      ],
     );
   }
 }

@@ -1,77 +1,57 @@
 import 'package:flutter/material.dart';
-
 import '../utils/app_colors.dart';
-import '../utils/app_text.dart';
+import '../utils/app_text_style.dart';
 
-class CardAge extends StatefulWidget {
-  const CardAge({
-    super.key,
-    required this.ager,
-  });
-
-  final int ager;
-  @override
-  State<CardAge> createState() => _CardAgeState();
-}
-
-class _CardAgeState extends State<CardAge> {
-  int ager = 25;
-
-  void incrementAger() {
-    setState(() {
-      ager++;
-    });
-  }
-
-  void uncrementAger() {
-    setState(() {
-      ager--;
-    });
-  }
+class Card2 extends StatelessWidget {
+  const Card2(
+      {super.key,
+      required this.text,
+      required this.value,
+      required this.remove,
+      required this.add});
+  final String text;
+  final int value;
+  final void Function(int) remove;
+  final void Function(int) add;
 
   @override
   Widget build(BuildContext context) {
-    return Expanded(
-      child: Card(
-        color: AppColor.brColor,
-        child: Column(
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        Text(text, style: AppTextStyle.weightTextStyle),
+        Text('$value', style: AppTextStyle.rostTextStyle),
+        Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Text(
-              AppText.age,
-              style: TextStyle(fontSize: 20, fontWeight: FontWeight.w500),
-            ),
-            Text(
-              '$ager',
-              style: TextStyle(fontSize: 40, fontWeight: FontWeight.w500),
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                FloatingActionButton.small(
-                  hoverColor: Colors.blue,
-                  splashColor: AppColor.redColor,
-                  foregroundColor: AppColor.whColor,
-                  onPressed: uncrementAger,
-                  tooltip: 'Decrease',
-                  child: Icon(Icons.remove),
-                  backgroundColor: AppColor.grColor,
-                ),
-                SizedBox(width: 10),
-                FloatingActionButton.small(
-                  hoverColor: Colors.blue,
-                  splashColor: AppColor.redColor,
-                  foregroundColor: AppColor.whColor,
-                  onPressed: incrementAger,
-                  tooltip: 'Increment',
-                  child: Icon(Icons.add),
-                  backgroundColor: AppColor.grColor,
-                ),
-              ],
-            ),
+            RemovAdd(
+                iconData: Icons.remove, onPressed: () => remove(value - 1)),
+            const SizedBox(width: 10),
+            RemovAdd(iconData: Icons.add, onPressed: () => remove(value + 1)),
           ],
         ),
-      ),
+      ],
+    );
+  }
+}
+
+class RemovAdd extends StatelessWidget {
+  const RemovAdd({Key? key, required this.iconData, required this.onPressed})
+      : super(key: key);
+
+  final IconData iconData;
+  final void Function()? onPressed;
+
+  @override
+  Widget build(BuildContext context) {
+    return FloatingActionButton.small(
+      hoverColor: Colors.blue,
+      splashColor: AppColor.redColor,
+      foregroundColor: AppColor.whColor,
+      onPressed: onPressed,
+      tooltip: 'Decrease',
+      backgroundColor: AppColor.glColor,
+      child: Icon(iconData, size: 30),
     );
   }
 }

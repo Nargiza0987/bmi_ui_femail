@@ -6,6 +6,6 @@ class AppColor {
   static Color blColor = Color(0xff111327);
   static Color brColor = Color(0xff1d1e32);
   static Color grColor = Color(0xff757652);
-  static Color glColor = Color.fromARGB(255, 96, 199, 189);
+  static Color glColor = Color.fromARGB(255, 156, 233, 224);
   static Color whColor = Color(0xffffffff);
 }
